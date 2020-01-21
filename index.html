@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            p{
+                margin:5px 0;;
+                font-weight: bold;
+            }
+            select{
+                background-color: white;
+                height: 30px;
+                border-radius: 5px;
+                padding-left: 10px;
+                padding-right: 10px;
+                margin-left: 20px;
+            }
+
+            input{
+                height: 30px;
+                border-radius: 5px;
+              background-color: white;
+              border: 1px solid #ccc;
+              margin-left: 20px;
+              padding-left: 10px;
+            }
+            div{
+                margin:20px 0;
+            }
+
+            body{
+                width:50%;
+                margin:0 auto;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+        <p>Student type</p>
+        <select id="student-type">
+            <option>Returning Student</option>
+            <option>Summer lesson student</option>
+        </select>
+    </div>
+
+    <!-- <div>
+        <p>Student Class</p>
+        <select>
+            <option>Primary three</option>
+            <option>Primary four</option>
+        </select>
+    </div> -->
+    <div>
+       <p>Total Fee :</p>
+        <input type="text" id="total-fee-input">
+    </div>
+
+    <div>
+        <p>Amount to Pay :</p>
+        <input type="text" id="paid-input">
+    </div>
+
+    <div>
+        <P>Balance :</P>
+        <input type="text" disabled id="balance-input">
+    </div>
+        <script>
+            console.log("cool")
+            const getObjectItem=(key)=>{
+                const possibleValues={
+                    ReturningStudent:500,
+                    Summerlessonstudent:600
+
+                }
+                return possibleValues[key];
+            }
+
+            const studentTypeChanged=(event)=>{
+                let selectedValue=event!=null?event.currentTarget.value:document.getElementById("student-type").value;
+                // remove spaces between the selected options value
+                let newVal=selectedValue.split(" ").join("");
+
+                let totalFee=getObjectItem(newVal)
+                console.log(totalFee);
+                document.getElementById("total-fee-input").value=totalFee;
+            }
+
+            
+            const amountToPayChanged=(event)=>{
+                
+                let selectedStudentType=document.getElementById("student-type").value;
+                console.log(event.target.value,selectedStudentType);
+                let newVal=selectedStudentType.split(" ").join("");
+                let totalFee=getObjectItem(newVal);
+                let amountEnterred=parseInt(event.target.value);
+                console.log(amountEnterred);
+                let balance=totalFee-amountEnterred;
+                document.getElementById("balance-input").value=balance;
+            }
+            studentTypeChanged();
+            document.getElementById("student-type").addEventListener("change",studentTypeChanged);
+            document.getElementById("paid-input").addEventListener("input",amountToPayChanged);
+        </script>
+    </body>
+</html>
